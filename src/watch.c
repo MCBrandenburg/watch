@@ -55,7 +55,7 @@ static int clear = 0;
  */
 
 void
-usage() {
+usage(int exitCode) {
   printf(
     "\n"
     "  Usage: watch [options] <cmd>\n"
@@ -70,7 +70,7 @@ usage() {
     "    -h, --help            output this help information\n"
     "\n"
     );
-  exit(1);
+  exit(exitCode);
 }
 
 /*
@@ -144,7 +144,7 @@ join(char **strs, int len, char *val) {
 
 int
 main(int argc, const char **argv){
-  if (1 == argc) usage();
+  if (1 == argc) usage(1);
   int interval = DEFAULT_INTERVAL;
 
   int len = 0;
@@ -156,7 +156,7 @@ main(int argc, const char **argv){
     if (!interpret) goto arg;
 
     // -h, --help
-    if (option("-h", "--help", arg)) usage();
+    if (option("-h", "--help", arg)) usage(0);
 
     // -q, --quiet
     if (option("-q", "--quiet", arg)) {
@@ -179,7 +179,7 @@ main(int argc, const char **argv){
     // -v, --version
     if (option("-v", "--version", arg)) {
       printf("%s\n", VERSION);
-      exit(1);
+      exit(0);
     }
 
     // -i, --interval <n>
